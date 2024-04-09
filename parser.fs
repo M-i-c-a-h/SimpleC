@@ -49,18 +49,24 @@ module parser =
 
 
   //
-  // stmt
-  //
-
-
-
-  //
   // stmts
   //
   let rec private stmts tokens = 
     let T1 = stmt tokens
     let T2 = morestmts T1
     T2
+
+
+  and  private morestmts tokens = 
+    match tokens with
+    | head :: _ -> 
+                   let T1 = stmt tokens
+                   let T2 = morestmts T1
+                   T2
+    | head :: _ when head = ";" -> matchToken ";" tokens
+    | _ -> failwith ("expecting statement, but found " + List.head tokens)
+
+
   and private stmt tokens = 
     match tokens with
     | head :: _ when head = ";" -> matchToken ";" tokens
@@ -68,7 +74,8 @@ module parser =
     | head :: _ when head = "cin" -> input tokens
     | head :: _ when head = "cout" -> output tokens
     | head :: _ when head = "=" -> assignment tokens
-    | head :: _ when head = "if" -> ifstmt
+    | head :: _ when head = "if" -> ifstmt tokens
+    | _ -> failwith ("expecting statement, but found " + List.head tokens)
 
   and private vardecl tokens = 
     let T1 = matchToken "int" tokens
@@ -95,6 +102,33 @@ module parser =
     | head :: _ when head = "endl" -> matchToken "endl" tokens
     | _ -> expr_value tokens
 
+
+  and private assignment tokens = 
+    let T1 = matchToken "identifier" tokens
+    let T2 = matchToken "=" T1
+    let T3 = expr T2
+    let T4 = matchToken ";" T3
+    T4
+
+
+  and private ifstmt tokens = 
+    let T1 = matchToken "if" tokens
+    let T2 = expr T1  // <condition> -> <expr>
+    let T3 = stmt T2  // <then_part> -> <stmt>
+    let T4 = if List.head T3 = "else" then matchToken "else" T3  // <else_part>
+             else matchToken ";" T3 
+    T4 
+            
+  and private expr tokens =
+    match tokens with
+    | head :: _ when head = "=" -> 
+                                  let T1 = expr_value tokens 
+                                  let T2 = expr_op T1 
+                                  let T3 = expr_value T2 
+                                  T3
+    | _ -> expr_value tokens
+
+
   and private expr_value tokens = 
     match tokens with
     | head :: _ when beginswith "identifier:" head -> matchToken "identifier" tokens
@@ -104,21 +138,6 @@ module parser =
     | head :: _ when head = "false" -> matchToken "false" tokens
     | _ -> failwith ("expecting identifier or literal, but found " + List.head tokens)
 
-  and private assignment tokens = 
-    let T1 = matchToken "identifier" tokens
-    let T2 = matchToken "=" T1
-    let T3 = expr T2
-    let T4 = matchToken ";" T3
-    T4
-
-  and private expr tokens =
-    match tokens with
-    | head :: _ -> 
-                  let T1 = expr_value tokens in
-                  let T2 = expr_op T1 in
-                  let T3 = expr_value T2 
-                  T3
-    | _ -> expr_value tokens
 
   and private expr_op tokens = 
     match tokens with
@@ -133,7 +152,7 @@ module parser =
     | head :: _ when head = ">=" -> matchToken ">=" tokens
     | head :: _ when head = "==" -> matchToken "==" tokens
     | head :: _ when head = "!=" -> matchToken "!=" tokens
-
+    | _ -> failwith ("expecting expression operator, but found " + List.head tokens)
 
 
 
