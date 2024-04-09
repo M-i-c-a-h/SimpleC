@@ -63,8 +63,8 @@ module parser =
                    let T1 = stmt tokens
                    let T2 = morestmts T1
                    T2
-    | head :: _ when head = ";" -> matchToken ";" tokens
-    | _ -> failwith ("expecting statement, but found " + List.head tokens)
+    | _ -> matchToken ";" tokens
+
 
 
   and private stmt tokens = 
