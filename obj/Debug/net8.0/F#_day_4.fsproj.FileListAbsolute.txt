@@ -27,3 +27,4 @@
 /Users/pappi/Documents/UIC_DOC/Spring2024/CS 341/F#_day_4/obj/Debug/net8.0/F#_day_4.pdb
 /Users/pappi/Documents/UIC_DOC/Spring2024/CS 341/F#_day_4/obj/Debug/net8.0/F#_day_4.genruntimeconfig.cache
 /Users/pappi/Documents/UIC_DOC/Spring2024/CS 341/F#_day_4/obj/Debug/net8.0/ref/F#_day_4.dll
+/Users/pappi/Documents/UIC_DOC/Spring2024/CS 341/F#_day_4/obj/Debug/net8.0/F#_day_4.sourcelink.json
