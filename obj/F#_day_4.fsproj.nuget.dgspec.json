@@ -1,0 +1,70 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/pappi/Documents/UIC_DOC/Spring2024/CS 341/F#_day_4/F#_day_4.fsproj": {}
+  },
+  "projects": {
+    "/Users/pappi/Documents/UIC_DOC/Spring2024/CS 341/F#_day_4/F#_day_4.fsproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/pappi/Documents/UIC_DOC/Spring2024/CS 341/F#_day_4/F#_day_4.fsproj",
+        "projectName": "F#_day_4",
+        "projectPath": "/Users/pappi/Documents/UIC_DOC/Spring2024/CS 341/F#_day_4/F#_day_4.fsproj",
+        "packagesPath": "/Users/pappi/.nuget/packages/",
+        "outputPath": "/Users/pappi/Documents/UIC_DOC/Spring2024/CS 341/F#_day_4/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/pappi/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "/usr/local/share/dotnet/sdk/8.0.201/FSharp/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[8.0.200, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.201/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

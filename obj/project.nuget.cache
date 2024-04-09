@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "6mrrTu7Cs/wnTWdTu3oWtTWGSWV95fp5Z4xMOatmE8Ljbh0KOzUiUb41JhbErPDktFXersofZCcJeIThDgc6gA==",
+  "success": true,
+  "projectFilePath": "/Users/pappi/Documents/UIC_DOC/Spring2024/CS 341/F#_day_4/F#_day_4.fsproj",
+  "expectedPackageFiles": [
+    "/Users/pappi/.nuget/packages/fsharp.core/8.0.200/fsharp.core.8.0.200.nupkg.sha512"
+  ],
+  "logs": []
+}
