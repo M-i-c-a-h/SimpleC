@@ -8,7 +8,13 @@
 // legal, otherwise the string "syntax_error: ..." is
 // returned denoting an invalid SimpleC program.
 //
-// <<YOUR NAME>>
+//
+// Name: Micah Olugbamila
+// Course: CS 341 
+// Date: 04/10/2024
+// U. of Illinois, Chicago
+// CS 341, Spring 2024
+//
 //
 // Original author:
 //   Prof. Joe Hummel
@@ -42,8 +48,11 @@ module parser =
 
     let next_token = List.head tokens
 
-    if expected_token = next_token || expected_token = "identifier:"  || expected_token = "str_literal"  || expected_token = "int_literal"  then  
-      List.tail tokens
+    if expected_token = next_token 
+      || (expected_token = "identifier" && beginswith "identifier" next_token) 
+      || (expected_token = "str_literal" && beginswith "str_literal" next_token)  
+      || (expected_token = "int_literal" && beginswith "int_literal" next_token) 
+        then  List.tail tokens
     else
       failwith ("expecting " + expected_token + ", but found " + next_token)
 
@@ -56,13 +65,12 @@ module parser =
     let T2 = morestmts T1
     T2
 
-
+  // todo
   and  private morestmts tokens = 
     match tokens with
-    | head :: _ -> 
-                   let T1 = stmt tokens
-                   let T2 = morestmts T1
-                   T2
+    | head :: _ when head = "}" -> tokens
+    | head :: _  -> let T1 = stmt tokens
+                    morestmts T1
     | _ -> matchToken ";" tokens
 
 
@@ -73,7 +81,7 @@ module parser =
     | head :: _ when head = "int" -> vardecl tokens
     | head :: _ when head = "cin" -> input tokens
     | head :: _ when head = "cout" -> output tokens
-    | head :: _ when head = "=" -> assignment tokens
+    | head :: _ when beginswith "identifier:" head -> assignment tokens
     | head :: _ when head = "if" -> ifstmt tokens
     | _ -> failwith ("expecting statement, but found " + List.head tokens)
 
@@ -84,11 +92,13 @@ module parser =
     T3
 
   and private input tokens = 
+    
     let T1 = matchToken "cin" tokens
     let T2 = matchToken ">>" T1
     let T3 = matchToken "identifier" T2
     let T4 = matchToken ";" T3
     T4
+    
 
   and private output tokens = 
     let T1 = matchToken "cout" tokens
@@ -110,24 +120,28 @@ module parser =
     let T4 = matchToken ";" T3
     T4
 
-
+  // todo
   and private ifstmt tokens = 
     let T1 = matchToken "if" tokens
-    let T2 = expr T1  // <condition> -> <expr>
-    let T3 = stmt T2  // <then_part> -> <stmt>
-    let T4 = if List.head T3 = "else" then matchToken "else" T3  // <else_part>
-             else matchToken ";" T3 
-    T4 
+    let T2 = matchToken "(" T1
+    let T3 = expr T2 // <condition> -> <expr>
+    let T4 = matchToken ")" T3
+    let T5 = stmt T4  // <then_part> -> <stmt>
+    let T6 = if List.head T5 = "else" then stmt (matchToken "else" T5)  // <else_part>
+             else T5
+    T6 
             
-  and private expr tokens =
-    match tokens with
-    | head :: _ when head = "=" -> 
-                                  let T1 = expr_value tokens 
-                                  let T2 = expr_op T1 
-                                  let T3 = expr_value T2 
-                                  T3
-    | _ -> expr_value tokens
 
+  // todo         
+  and private expr tokens =
+    let T1 = expr_value tokens
+    match List.head T1 with
+    | "+" | "-" | "*" | "/" | "^" | "<" 
+    | "<=" | ">" | ">=" | "==" | "!=" ->  let T2 = expr_op T1
+                                          let T3 = expr_value T2
+                                          T3 
+    | _ -> T1
+    
 
   and private expr_value tokens = 
     match tokens with
